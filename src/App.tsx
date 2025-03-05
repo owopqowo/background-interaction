@@ -19,6 +19,13 @@ function App() {
     setCheckboxes((prev) => ({ ...prev, [id]: checked }));
   };
 
+  const randomDuration = (minTime: number, maxTime: number, baseSize: number, isWidthBased: boolean) => {
+    const size = isWidthBased ? window.innerWidth : window.innerHeight;
+    const ratio = size / baseSize;
+    const timeRange = (maxTime - minTime) * ratio;
+    return minTime + timeRange * Math.random();
+  };
+
   const createFlower = useCallback(() => {
     const flower = document.createElement('img');
     flower.src = './flower.svg';
@@ -29,7 +36,7 @@ function App() {
     flower.style.left = `${startLeft}px`;
     flower.style.width = `${size}px`;
     flower.style.height = `${size}px`;
-    flower.style.animationDuration = `${Math.random() * (20 - 10) + 10}s`;
+    flower.style.animationDuration = `${randomDuration(10, 20, 740, false)}s`;
     flower.style.animationDelay = `${Math.random() * 20}s`;
     flower.style.setProperty('--random-x', `${Math.random() * 50 - 25}px`);
     flower.style.setProperty('--random-rotate', `${Math.random() * 360}deg`);
@@ -53,7 +60,7 @@ function App() {
     const startTop = Math.random() * 60;
     bee.style.top = `${startTop}%`;
     bee.style.left = '-40px';
-    beeImg.style.animationDuration = `${Math.random() * (15 - 10) + 10}s`;
+    beeImg.style.animationDuration = `${randomDuration(10, 15, 360, true)}s`;
     beeImg.style.animationDelay = `${Math.random() * 15}s`;
     beeImg.style.setProperty('--random-y', `${Math.random() * (30 - 10) + 10}px`);
     beeImg.style.setProperty('--random-x', `${window.innerWidth + 80}px`);
@@ -78,7 +85,7 @@ function App() {
 
     const startTop = Math.random() * 60;
     butterflyImg.style.top = `${startTop}%`;
-    butterfly.style.animationDuration = `${Math.random() * (10 - 5) + 5}s`;
+    butterfly.style.animationDuration = `${randomDuration(8, 10, 360, true)}s`;
     butterfly.style.animationDelay = `${Math.random() * 10}s`;
     butterfly.style.setProperty('--CONTAINER-WIDTH-PX', `${window.innerWidth + 100}`);
     butterfly.style.setProperty('--r', `${Math.random() * (10 - 5) + 5}`);
