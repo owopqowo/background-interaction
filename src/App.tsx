@@ -31,9 +31,8 @@ function App() {
     flower.src = './flower.svg';
     flower.classList.add(styles.flower);
 
-    const startLeft = Math.random() * window.innerWidth;
     const size = Math.random() * (20 - 10) + 10;
-    flower.style.left = `${startLeft}px`;
+    flower.style.left = `${Math.random() * 100}%`;
     flower.style.width = `${size}px`;
     flower.style.height = `${size}px`;
     flower.style.animationDuration = `${randomDuration(10, 20, 740, false)}s`;
