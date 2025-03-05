@@ -84,7 +84,7 @@
   left: -50px;
   right: -50px;
   width: calc(var(--CONTAINER-WIDTH) * var(--UNIT));
-  animation: progress 5s linear forwards infinite;
+  animation: progress 5s linear forwards;
 
   img {
     --shape-width: 20px;

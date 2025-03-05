@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './app.module.css';
 
 function App() {
@@ -8,9 +8,10 @@ function App() {
     butterfly: false,
     bee: false,
   });
+  const checkboxesRef = useRef(checkboxes);
   const NUM_FLOWER = 30;
-  const NUM_BEE = 5;
   const NUM_BUTTERFLY = 4;
+  const NUM_BEE = 5;
   const backgroundRef = useRef<HTMLDivElement | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,7 +19,7 @@ function App() {
     setCheckboxes((prev) => ({ ...prev, [id]: checked }));
   };
 
-  const createFlower = () => {
+  const createFlower = useCallback(() => {
     const flower = document.createElement('img');
     flower.src = './flower.svg';
     flower.classList.add(styles.flower);
@@ -37,11 +38,13 @@ function App() {
 
     flower.addEventListener('animationend', () => {
       flower.remove();
+
+      if (!checkboxesRef.current.flower) return;
       createFlower();
     });
-  };
+  }, []);
 
-  const createBee = () => {
+  const createBee = useCallback(() => {
     const bee = document.createElement('span');
     const beeImg = document.createElement('img');
     beeImg.src = './bee-animated.svg';
@@ -51,7 +54,7 @@ function App() {
     bee.style.top = `${startTop}%`;
     bee.style.left = '-40px';
     beeImg.style.animationDuration = `${Math.random() * (15 - 10) + 10}s`;
-    beeImg.style.animationDelay = `${Math.random() * 1}s`;
+    beeImg.style.animationDelay = `${Math.random() * 15}s`;
     beeImg.style.setProperty('--random-y', `${Math.random() * (30 - 10) + 10}px`);
     beeImg.style.setProperty('--random-x', `${window.innerWidth + 80}px`);
     beeImg.style.setProperty('--direction', '1');
@@ -61,11 +64,13 @@ function App() {
 
     bee.addEventListener('animationend', () => {
       bee.remove();
+
+      if (!checkboxesRef.current.bee) return;
       createBee();
     });
-  };
+  }, []);
 
-  const createButterfly = () => {
+  const createButterfly = useCallback(() => {
     const butterfly = document.createElement('span');
     const butterflyImg = document.createElement('img');
     butterfly.classList.add(styles.butterfly);
@@ -73,9 +78,9 @@ function App() {
 
     const startTop = Math.random() * 60;
     butterflyImg.style.top = `${startTop}%`;
-    butterfly.style.animationDuration = `${5 + Math.random() * 5}s`;
-    butterfly.style.animationDelay = `${Math.random() * 8}s`;
-    // butterfly.style.setProperty('--CONTAINER-WIDTH-PX', `${window.innerWidth + 100}px`);
+    butterfly.style.animationDuration = `${Math.random() * (10 - 5) + 5}s`;
+    butterfly.style.animationDelay = `${Math.random() * 10}s`;
+    butterfly.style.setProperty('--CONTAINER-WIDTH-PX', `${window.innerWidth + 100}`);
     butterfly.style.setProperty('--r', `${Math.random() * (10 - 5) + 5}`);
 
     butterfly.appendChild(butterflyImg);
@@ -83,9 +88,39 @@ function App() {
 
     butterfly.addEventListener('animationend', () => {
       butterfly.remove();
+
+      if (!checkboxesRef.current.butterfly) return;
       createButterfly();
     });
-  };
+  }, []);
+
+  useEffect(() => {
+    checkboxesRef.current = checkboxes;
+  }, [checkboxes]);
+
+  useEffect(() => {
+    if (checkboxes.flower) {
+      for (let index = 0; index < NUM_FLOWER; index++) {
+        createFlower();
+      }
+    }
+  }, [checkboxes.flower, createFlower]);
+
+  useEffect(() => {
+    if (checkboxes.butterfly) {
+      for (let index = 0; index < NUM_BUTTERFLY; index++) {
+        createButterfly();
+      }
+    }
+  }, [checkboxes.butterfly, createButterfly]);
+
+  useEffect(() => {
+    if (checkboxes.bee) {
+      for (let index = 0; index < NUM_BEE; index++) {
+        createBee();
+      }
+    }
+  }, [checkboxes.bee, createBee]);
 
   return (
     <>
