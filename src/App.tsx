@@ -36,7 +36,7 @@ function App() {
     flower.style.width = `${size}px`;
     flower.style.height = `${size}px`;
     flower.style.animationDuration = `${randomDuration(10, 20, 740, false)}s`;
-    flower.style.animationDelay = `${Math.random() * 20}s`;
+    flower.style.animationDelay = `${randomDuration(0, 20, 740, false)}s`;
     flower.style.setProperty('--random-x', `${Math.random() * 50 - 25}px`);
     flower.style.setProperty('--random-rotate', `${Math.random() * 360}deg`);
 
@@ -60,7 +60,7 @@ function App() {
     bee.style.top = `${startTop}%`;
     bee.style.left = '-40px';
     beeImg.style.animationDuration = `${randomDuration(10, 15, 360, true)}s`;
-    beeImg.style.animationDelay = `${Math.random() * 15}s`;
+    beeImg.style.animationDelay = `${randomDuration(0, 15, 360, true)}s`;
     beeImg.style.setProperty('--random-y', `${Math.random() * (30 - 10) + 10}px`);
     beeImg.style.setProperty('--random-x', `${window.innerWidth + 80}px`);
     beeImg.style.setProperty('--direction', '1');
@@ -85,7 +85,7 @@ function App() {
     const startTop = Math.random() * 60;
     butterflyImg.style.top = `${startTop}%`;
     butterfly.style.animationDuration = `${randomDuration(8, 10, 360, true)}s`;
-    butterfly.style.animationDelay = `${Math.random() * 10}s`;
+    butterfly.style.animationDelay = `${randomDuration(0, 10, 360, true)}s`;
     butterfly.style.setProperty('--CONTAINER-WIDTH-PX', `${window.innerWidth + 100}`);
     butterfly.style.setProperty('--r', `${Math.random() * (10 - 5) + 5}`);
 
